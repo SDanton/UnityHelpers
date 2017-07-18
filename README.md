@@ -1,5 +1,5 @@
 # UnityHelpers
-Bunch of addons, scripts, etc to make Unity just a bit easier to use.
+Soon to be a bunch of addons, scripts, etc to make Unity just a bit easier to use.
 
 # Edge Joiner
 
