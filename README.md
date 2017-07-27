@@ -1,6 +1,16 @@
 # UnityHelpers
 Soon to be a bunch of addons, scripts, etc to make Unity just a bit easier to use.
 
+# Animation Object Property Remover
+
+Removes an animated property from all clips in an animator.
+
+Useful when you've refactored your animation hierarchy and want to remove dead references.
+
+Given an animator, path to specific object and property value this tool walks all curves (keyframes) in all clips within an animator and removes the specificed object's property by removing all associated keyframes.
+
+NOTE: Please back up your work before running this.
+
 # Edge Joiner
 
 Simple script that allows you to select two 2D edge colliders and have their last and first points joined together. The point from the edge to the right is used as the snap reference point.
