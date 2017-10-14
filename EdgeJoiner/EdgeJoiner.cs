@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using System;
 
@@ -10,8 +10,8 @@ public class EdgeJoiner : EditorWindow
 		EditorWindow.GetWindow (typeof(EdgeJoiner));
 	}
 
-	GameObject[] gos;
-
+	GameObject[] GOs;
+	
 	EdgeCollider2D left, right;
 
 	Vector2 leftPoint, rightPoint, w_leftPoint, w_rightPoint;
@@ -23,20 +23,11 @@ public class EdgeJoiner : EditorWindow
 	{
 		GUILayout.Label ("EdgeCollider2D point editor", EditorStyles.boldLabel);
 
-		gos = Selection.gameObjects;
+		GOs = Selection.gameObjects;
 
-		if (gos.Length == 2)
+		if (GOs.Length == 2)
 		{
-			if (gos[0].transform.position.x < gos[1].transform.position.x)
-			{
-				left = gos[0].GetComponent<EdgeCollider2D>();
-				right = gos[1].GetComponent<EdgeCollider2D>();
-			}
-			else
-			{
-				left = gos[1].GetComponent<EdgeCollider2D>();
-				right = gos[0].GetComponent<EdgeCollider2D>();
-			}
+			AssignLeftRight();
 
 			if (left == null || right == null)
 			{
@@ -67,11 +58,51 @@ public class EdgeJoiner : EditorWindow
 		}
 		else
 		{
-			if (gos.Length == 0)
+			if (GOs.Length == 0)
 			{
 				showHelp ();
 			}
 		}
+	}
+
+	void AssignLeftRight ()
+	{
+		Vector2 endPointsGO0 = EndPoints(GOs[0].GetComponent<EdgeCollider2D>());
+        Vector2 endPointsGO1 = EndPoints(GOs[1].GetComponent<EdgeCollider2D>());
+
+		if (endPointsGO0.x < endPointsGO1.x)
+		{			
+			left = GOs[0].GetComponent<EdgeCollider2D>();
+            right = GOs[1].GetComponent<EdgeCollider2D>();
+		}
+		else
+		{
+			left = GOs[1].GetComponent<EdgeCollider2D>();
+            right = GOs[0].GetComponent<EdgeCollider2D>();
+		}
+	}
+
+	Vector2 EndPoints (EdgeCollider2D edge)
+	{
+		float leftPoint = Mathf.Infinity;
+		float rightPoint = Mathf.Infinity;
+
+		for (int i = 0; i < edge.points.Length; i++)
+		{
+			Vector2 point = edge.transform.TransformPoint(edge.points[i]);
+
+			if (point.x < leftPoint)
+			{
+				leftPoint = point.x;
+			}
+
+			if (point.x > rightPoint)
+			{
+				rightPoint = point.x;
+			}
+		}
+
+		return new Vector3 (leftPoint, rightPoint);
 	}
 
 	void showHelp ()
