@@ -2,6 +2,12 @@ using UnityEditor;
 using UnityEngine;
 using System;
 
+public enum JoinAnchors
+{
+    LeftEnd,
+    RightStart
+}
+
 public class EdgeJoiner : EditorWindow 
 {
 	[MenuItem("Window/Join Edges")]
@@ -18,6 +24,8 @@ public class EdgeJoiner : EditorWindow
 
 	Vector2[] vertsLeft = new Vector2[0];
 	Vector2[] vertsRight = new Vector2[0];
+
+	JoinAnchors _anchor; 
 
 	void OnGUI()
 	{
@@ -41,6 +49,8 @@ public class EdgeJoiner : EditorWindow
 			GUILayout.Label ("Left Edge: " + left.name);
 			GUILayout.Label ("Right Edge: " + right.name);
 
+			_anchor = (JoinAnchors)EditorGUILayout.EnumPopup("Edge Anchor:", _anchor);
+
 			if (GUILayout.Button ("Join"))
 			{
 				leftPoint = left.points [left.points.Length - 1];
@@ -49,8 +59,18 @@ public class EdgeJoiner : EditorWindow
 				w_leftPoint = left.transform.TransformPoint (leftPoint);
 				w_rightPoint = right.transform.TransformPoint (rightPoint);
 
-				vertsLeft[left.points.Length - 1] = left.transform.InverseTransformPoint (w_rightPoint);
-				vertsRight[0] = right.transform.InverseTransformPoint (w_rightPoint);
+				switch (_anchor)
+				{
+					case JoinAnchors.RightStart:
+						vertsLeft[left.points.Length - 1] = left.transform.InverseTransformPoint(w_rightPoint);
+                        vertsRight[0] = right.transform.InverseTransformPoint(w_rightPoint);
+						break;
+
+					case JoinAnchors.LeftEnd:
+						vertsLeft[left.points.Length - 1] = left.transform.InverseTransformPoint(w_leftPoint);
+                        vertsRight[0] = right.transform.InverseTransformPoint(w_leftPoint);
+						break;
+				}
 
 				left.points = vertsLeft;
 				right.points = vertsRight;
