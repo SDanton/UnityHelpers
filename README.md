@@ -1,5 +1,10 @@
+
 # UnityHelpers
-Soon to be a bunch of addons, scripts, etc to make Unity just a bit easier to use.
+Some scripts that I've written during Unity dev that help a bit with productivity.
+
+# Label Icon Matcher
+
+Hieracrchy item colour matches label icon for any prefab. 
 
 # Animation Object Property Remover
 
