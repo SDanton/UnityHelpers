@@ -13,6 +13,18 @@ public class LabelIconMatcher
     {
         EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGUI;
     }
+    
+    static Color ColorFromHex(string hex, float alpha = 1.0f)
+    {
+        Color newColor = new Color(StrToFloat(hex.Substring(0, 2)), StrToFloat(hex.Substring(2, 2)), StrToFloat(hex.Substring(4, 2)), alpha);
+
+        return newColor;
+    }
+    
+    static float StrToFloat(string str)
+    {
+        return ((float)int.Parse(str, System.Globalization.NumberStyles.HexNumber) / 255f);
+    }
 
     static Color getColourForTooltip(string label)
     {
@@ -22,42 +34,42 @@ public class LabelIconMatcher
         {
             // gray
             case "sv_label_0":
-                ret = GLB.ColorFromHex ("A58E7A");
+                ret = ColorFromHex ("A58E7A");
                 break;
 
             // blue
             case "sv_label_1":
-                ret = GLB.ColorFromHex("609BE2");
+                ret = ColorFromHex("609BE2");
                 break;
 
             // teal
             case "sv_label_2":
-                ret = GLB.ColorFromHex("609BE2");
+                ret = ColorFromHex("609BE2");
                 break;
 
             // green
             case "sv_label_3":
-                ret = GLB.ColorFromHex("4FE247");
+                ret = ColorFromHex("4FE247");
                 break;
 
             // yellow
             case "sv_label_4":
-                ret = GLB.ColorFromHex("F4E33E");
+                ret = ColorFromHex("F4E33E");
                 break;
 
             // orange
             case "sv_label_5":
-                ret = GLB.ColorFromHex("F28840");
+                ret = ColorFromHex("F28840");
                 break;
 
             // red
             case "sv_label_6":
-                ret = GLB.ColorFromHex("DD4A4A");
+                ret = ColorFromHex("DD4A4A");
                 break;
 
             // purple
             case "sv_label_7":
-                ret = GLB.ColorFromHex("B066D3");
+                ret = ColorFromHex("B066D3");
                 break;
         }
 
@@ -79,13 +91,7 @@ public class LabelIconMatcher
             if (prefabType == PrefabType.PrefabInstance)
             {                
                 GUIContent content = EditorGUIUtility.ObjectContent (obj, null);
-                fontColor = getColourForTooltip (content.image.name);
-
-                if (gameObject.name == "Father")
-                {
-                    fontColor = Color.cyan;
-                    style = FontStyle.Bold;
-                }
+                fontColor = getColourForTooltip (content.image.name);                
 
                 Rect offsetRect = new Rect(selectionRect.position + offset, selectionRect.size + padding);
                 EditorGUI.DrawRect(selectionRect, backgroundColor);                
@@ -99,20 +105,6 @@ public class LabelIconMatcher
 
                 Rect iconRect = new Rect(selectionRect.position + iconOffset, new Vector2(12, 12));
                 EditorGUI.DrawRect(iconRect, fontColor);
-            }
-            else if (gameObject.name.Contains("++"))
-            {
-                fontColor = Color.white;
-                style = FontStyle.Bold;
-
-                Rect offsetRect = new Rect(selectionRect.position + offset, selectionRect.size + padding);
-                EditorGUI.DrawRect(selectionRect, backgroundColor);
-                EditorGUI.LabelField(offsetRect, obj.name, new GUIStyle()
-                {
-                    normal = new GUIStyleState() { textColor = fontColor },
-                    fontStyle = style
-                }
-                );
             }
         }
     }
