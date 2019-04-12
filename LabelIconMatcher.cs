@@ -44,7 +44,7 @@ public class LabelIconMatcher
 
             // teal
             case "sv_label_2":
-                ret = ColorFromHex("609BE2");
+                ret = ColorFromHex("50D6A5");
                 break;
 
             // green
