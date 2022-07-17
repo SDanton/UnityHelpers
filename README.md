@@ -2,6 +2,11 @@
 # UnityHelpers
 Some scripts that I've written during Unity dev that help a bit with productivity.
 
+# Find Missing Scripts Recursively
+
+Looks through open scenes or a selected gameObject and finds any missing script components. Allowing you to quickly remove the annoying associated warning.
+Originally authored by: https://gigadrillgames.com/2020/03/19/finding-missing-scripts-in-unity/
+
 # Label Icon Matcher
 
 Hieracrchy item colour matches label icon for any prefab. 
